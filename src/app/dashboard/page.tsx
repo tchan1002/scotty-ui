@@ -112,16 +112,21 @@ export default function Dashboard() {
       <h1 className="text-2xl font-semibold mb-4">Your GitHub Repos</h1>
       
       {inbound && (
-  <div className="mb-4 rounded bg-blue-600 border border-blue-600 text-white p-3 flex items-center justify-between gap-3">
+  <div className="mb-4 rounded border border-black bg-black text-white p-3 flex items-center justify-between gap-3">
     <div>
-      📬 Your Scotty address: <strong>{inbound}</strong>
+      📬 Your Scotty address: <strong className="underline decoration-white/50">{inbound}</strong>
     </div>
     <button
-      className="px-3 py-1 rounded border border-blue-600 bg-green-200"
+      className={
+        "px-3 py-1 rounded border transition-colors " +
+        (copied
+          ? "bg-white text-black border-white"
+          : "bg-black text-white border-white hover:bg-white hover:text-black")
+      }
       onClick={() => {
         navigator.clipboard.writeText(inbound);
         setCopied(true);
-        setTimeout(() => setCopied(false), 1500);
+        setTimeout(() => setCopied(false), 1200);
       }}
       title="Copy to clipboard"
     >
@@ -130,11 +135,13 @@ export default function Dashboard() {
   </div>
 )}
 
+
 {selected && (
-  <div className="mb-4 rounded bg-green border border-green text-white p-3">
-    ✅ Selected: <strong>{selected}</strong>
+  <div className="mb-4 rounded border border-black bg-black text-white p-3">
+    ✅ Selected: <strong className="underline decoration-white/50">{selected}</strong>
   </div>
 )}
+
 
       {error && (
         <div className="mb-4 rounded bg-red border border-red p-3">
