@@ -20,6 +20,8 @@ export default function Dashboard() {
   const [busy, setBusy] = useState<string>(""); // full_name while posting
 
   const [inbound, setInbound] = useState<string>("");
+  const [copied, setCopied] = useState(false);
+
 
   useEffect(() => {
     if (status !== "authenticated") return;
@@ -110,24 +112,30 @@ export default function Dashboard() {
       <h1 className="text-2xl font-semibold mb-4">Your GitHub Repos</h1>
       
       {inbound && (
-      <div className="mb-4 rounded bg-blue-50 border border-blue-200 p-3 flex items-center justify-between gap-3">
-        <div>
-          📬 Your Scotty address: <strong>{inbound}</strong>
-        </div>
-        <button
-          className="px-3 py-1 rounded border"
-          onClick={() => navigator.clipboard.writeText(inbound)}
-          title="Copy to clipboard"
-        >
-          Copy
-        </button>
-      </div>
-    )}
-      {selected && (
-        <div className="mb-4 rounded bg-green-50 border border-green-200 p-3">
-          ✅ Selected: <strong>{selected}</strong>
-        </div>
-      )}
+  <div className="mb-4 rounded bg-blue-200 border border-blue-400 text-blue-950 p-3 flex items-center justify-between gap-3">
+    <div>
+      📬 Your Scotty address: <strong>{inbound}</strong>
+    </div>
+    <button
+      className="px-3 py-1 rounded border border-blue-600 bg-white"
+      onClick={() => {
+        navigator.clipboard.writeText(inbound);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      }}
+      title="Copy to clipboard"
+    >
+      {copied ? "Copied!" : "Copy"}
+    </button>
+  </div>
+)}
+
+{selected && (
+  <div className="mb-4 rounded bg-green-200 border border-green-500 text-green-950 p-3">
+    ✅ Selected: <strong>{selected}</strong>
+  </div>
+)}
+
       {error && (
         <div className="mb-4 rounded bg-red-50 border border-red-200 p-3">
           ⚠️ {error}
