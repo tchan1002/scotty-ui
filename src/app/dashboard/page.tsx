@@ -19,6 +19,8 @@ export default function Dashboard() {
   const [selected, setSelected] = useState<string>("");
   const [busy, setBusy] = useState<string>(""); // full_name while posting
 
+  const [inbound, setInbound] = useState<string>("");
+
   useEffect(() => {
     if (status !== "authenticated") return;
     const s = session as Session & { accessToken?: string };
@@ -69,6 +71,16 @@ export default function Dashboard() {
       }
     })();
   }, [status]);  
+
+  useEffect(() => {
+    if (status !== "authenticated") return;
+    (async () => {
+      const res = await fetch("/api/my-inbound", { credentials: "include" });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data?.inbound) setInbound(data.inbound);
+    })();
+  }, [status]);
   
   async function chooseRepo(full_name: string) {
     try {
@@ -89,13 +101,28 @@ export default function Dashboard() {
       setBusy("");
     }
   }
-
+  
   if (status === "loading") return <main className="p-8">Loading…</main>;
   if (status !== "authenticated") return <main className="p-8">Please sign in on the home page.</main>;
 
   return (
     <main className="max-w-2xl mx-auto p-8">
       <h1 className="text-2xl font-semibold mb-4">Your GitHub Repos</h1>
+      
+      {inbound && (
+      <div className="mb-4 rounded bg-blue-50 border border-blue-200 p-3 flex items-center justify-between gap-3">
+        <div>
+          📬 Your Scotty address: <strong>{inbound}</strong>
+        </div>
+        <button
+          className="px-3 py-1 rounded border"
+          onClick={() => navigator.clipboard.writeText(inbound)}
+          title="Copy to clipboard"
+        >
+          Copy
+        </button>
+      </div>
+    )}
       {selected && (
         <div className="mb-4 rounded bg-green-50 border border-green-200 p-3">
           ✅ Selected: <strong>{selected}</strong>
