@@ -112,12 +112,12 @@ export default function Dashboard() {
       <h1 className="text-2xl font-semibold mb-4">Your GitHub Repos</h1>
       
       {inbound && (
-  <div className="mb-4 rounded bg-darkblue border border-darkblue text-white p-3 flex items-center justify-between gap-3">
+  <div className="mb-4 rounded bg-blue-600 border border-blue-600 text-white p-3 flex items-center justify-between gap-3">
     <div>
       📬 Your Scotty address: <strong>{inbound}</strong>
     </div>
     <button
-      className="px-3 py-1 rounded border border-blue-600 bg-white"
+      className="px-3 py-1 rounded border border-blue-600 bg-green-200"
       onClick={() => {
         navigator.clipboard.writeText(inbound);
         setCopied(true);
