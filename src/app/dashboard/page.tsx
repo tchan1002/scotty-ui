@@ -112,7 +112,7 @@ export default function Dashboard() {
       <h1 className="text-2xl font-semibold mb-4">Your GitHub Repos</h1>
       
       {inbound && (
-  <div className="mb-4 rounded border border-black bg-black text-white p-3 flex items-center justify-between gap-3">
+  <div className="mb-4 rounded border border-white bg-black text-white p-3 flex items-center justify-between gap-3">
     <div>
       📬 Your Scotty address: <strong className="underline decoration-white/50">{inbound}</strong>
     </div>
@@ -137,7 +137,7 @@ export default function Dashboard() {
 
 
 {selected && (
-  <div className="mb-4 rounded border border-black bg-black text-white p-3">
+  <div className="mb-4 rounded border border-white bg-black text-white p-3">
     ✅ Selected: <strong className="underline decoration-white/50">{selected}</strong>
   </div>
 )}
